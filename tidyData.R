@@ -59,5 +59,5 @@ lbls_raw <- read.table("activity_labels.txt")
 lbls <- sapply(y, function(x) lbls_raw[x,2])
 
 # compose the final DataFrame
-df <- cbind(X, lbls, subj)
-names(df) <- append(nice_feature_names, "Activity.Type", "Subject.ID")
+df <- cbind(X, lbls, as.character(subj))
+names(df) <- append(nice_feature_names, c("Activity.Type", "Subject.ID"))
