@@ -1,3 +1,5 @@
+library(dplyr)
+
 ## function that converts dataset variable names
 ## to descriptive ones
 
