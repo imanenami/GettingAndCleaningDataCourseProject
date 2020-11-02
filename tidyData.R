@@ -1,7 +1,7 @@
-## Automatically Convert Dataset Variable Names
-## to Descriptive Names
+## function that converts dataset variable names
+## to descriptive ones
 
-nice_name <- function(name) {
+make_nice_name <- function(name) {
   ## detect Time/Frequency Dimension
   dom <- substring(name, 1, 1)[1]
   if (dom == "t") {
@@ -39,20 +39,25 @@ y_train <- read.table(file.path("train", "y_train.txt"))
 X_test <- read.table(file.path("test", "X_test.txt"))
 y_test <- read.table(file.path("test", "y_test.txt"))
 
+# read subject 
+subj_train <- read.table(file.path("test", "subject_train.txt"))
+subj_test <- read.table(file.path("test", "subject_test.txt"))
+
 ## merge train and test datasest
 X <- rbind(X_train, X_test)
 y <- rbind(y_train, y_test)
+subj <- rbind(subj_train, subj_test)
 
 ## select only mean() and std() features from X
 X <- X[,target_features]
 
 ## make nice feature names!
-nice_feature_names <- as.character(sapply(features[target_features, 2], nice_name))
+nice_feature_names <- as.character(sapply(features[target_features, 2], make_nice_name))
 
 # convert y values to descriptive activity labels
 lbls_raw <- read.table("activity_labels.txt")
 lbls <- sapply(y, function(x) lbls_raw[x,2])
 
 # compose the final DataFrame
-df <- cbind(X, lbls)
-names(df) <- append(nice_feature_names, "Activity.Type")
+df <- cbind(X, lbls, subj)
+names(df) <- append(nice_feature_names, "Activity.Type", "Subject.ID")
