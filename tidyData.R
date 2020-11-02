@@ -61,3 +61,6 @@ lbls <- sapply(y, function(x) lbls_raw[x,2])
 # compose the final DataFrame
 df <- cbind(X, lbls, as.character(subj))
 names(df) <- append(nice_feature_names, c("Activity.Type", "Subject.ID"))
+
+# calculate average variables for each activity type and subject
+avg_df <- df %>% group_by(Activity.Type, Subject.ID) %>% summarise_if(is.numeric, list(mean = mean))
