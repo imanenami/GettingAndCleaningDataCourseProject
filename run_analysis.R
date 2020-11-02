@@ -59,8 +59,10 @@ lbls_raw <- read.table("activity_labels.txt")
 lbls <- sapply(y, function(x) lbls_raw[x,2])
 
 # compose the final DataFrame
-df <- cbind(X, lbls, as.character(subj))
+df <- cbind(X, factor(lbls), factor(subj[,1]))
 names(df) <- append(nice_feature_names, c("Activity.Type", "Subject.ID"))
 
 # calculate average variables for each activity type and subject
-avg_df <- df %>% group_by(Activity.Type, Subject.ID) %>% summarise_if(is.numeric, list(mean = mean))
+avg_df <- df %>% group_by(Activity.Type, Subject.ID) %>% summarise_if(is.numeric, list(AVERAGE = mean))
+write.table(avg_df, "out.txt", row.names = F)
+avg_df
