@@ -40,7 +40,7 @@ X_test <- read.table(file.path("test", "X_test.txt"))
 y_test <- read.table(file.path("test", "y_test.txt"))
 
 # read subject 
-subj_train <- read.table(file.path("test", "subject_train.txt"))
+subj_train <- read.table(file.path("train", "subject_train.txt"))
 subj_test <- read.table(file.path("test", "subject_test.txt"))
 
 ## merge train and test datasest
